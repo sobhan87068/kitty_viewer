@@ -56,8 +56,14 @@ fun KittyCard(kitty: Kitty, onClick: () -> Unit) {
             contentScale = ContentScale.FillHeight
         )
         Text(
-            text = "${kitty.width}x${kitty.height}",
+            text = kitty.id,
             fontWeight = FontWeight(600),
+            fontSize = 14.sp, lineHeight = 16.sp,
+            maxLines = 1, overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            text = "${kitty.width}x${kitty.height}",
+            fontWeight = FontWeight(400),
             fontSize = 12.sp, lineHeight = 14.sp,
             maxLines = 1, overflow = TextOverflow.Ellipsis
         )
