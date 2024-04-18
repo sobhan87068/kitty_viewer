@@ -21,5 +21,6 @@ internal object DatabaseModule {
         context,
         KittyCache::class.java,
         "kitties-database",
-    ).build()
+    ).addMigrations(KittyCache.MIGRATION_1_2)
+        .build()
 }

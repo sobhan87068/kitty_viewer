@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getKittiesUseCase: GetKittiesUseCase,
-    private val retrieveKittiesPageUseCase: RetrieveKittiesPageUseCase
+    private val retrieveKittiesPageUseCase: RetrieveKittiesPageUseCase,
 ) : BaseViewModel<HomeAction>() {
 
     private var nextPage = 1

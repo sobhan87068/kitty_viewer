@@ -1,6 +1,7 @@
 package com.example.kittyviewer.di
 
 import com.example.kittyviewer.database.KittyCache
+import com.example.kittyviewer.database.dao.BookmarkDao
 import com.example.kittyviewer.database.dao.KittyDao
 import dagger.Module
 import dagger.Provides
@@ -12,5 +13,8 @@ import dagger.hilt.components.SingletonComponent
 object DaosModule {
 
     @Provides
-    fun provideMovieDao(database: KittyCache): KittyDao = database.kittyDao()
+    fun provideKittyDao(database: KittyCache): KittyDao = database.kittyDao()
+
+    @Provides
+    fun provideBookmarkDao(database: KittyCache): BookmarkDao = database.bookmarkDao()
 }

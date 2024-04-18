@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.kittyviewer.ui.bookmark.BookmarkViewModel
+import com.example.kittyviewer.ui.bookmark.Bookmarks
 import com.example.kittyviewer.ui.designsystem.LoadMoreError
 import com.example.kittyviewer.ui.home.ApiState
 import com.example.kittyviewer.ui.home.Home
@@ -37,11 +38,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
+    private val bookmarkViewModel: BookmarkViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.submitAction(HomeAction.LoadMore)
+        homeViewModel.submitAction(HomeAction.LoadMore)
         setContent {
             val navController = rememberNavController()
             CompositionLocalProvider(LocalNavController provides navController) {
@@ -53,13 +55,13 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(navController = navController, startDestination = "/home") {
                             composable("/home") {
-                                MainPage(viewModel) {
-                                    viewModel.submitAction(HomeAction.LoadMore)
+                                MainPage(homeViewModel) {
+                                    homeViewModel.submitAction(HomeAction.LoadMore)
                                 }
                             }
 
                             composable("/bookmarks") {
-                                Text(text = "Bookmarks")
+                                Bookmarks(bookmarkViewModel)
                             }
                         }
                     }

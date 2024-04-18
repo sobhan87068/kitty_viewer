@@ -2,8 +2,11 @@ package com.example.kittyviewer.data.repository
 
 import com.example.kittyviewer.data.model.Kitty
 import com.example.kittyviewer.data.result.ApiResult
+import com.example.kittyviewer.database.dao.BookmarkDao
 import com.example.kittyviewer.database.dao.KittyDao
+import com.example.kittyviewer.database.model.BookmarkEntity
 import com.example.kittyviewer.database.model.KittyEntity
+import com.example.kittyviewer.database.model.asBookmarkEntity
 import com.example.kittyviewer.database.model.asExternalModel
 import com.example.kittyviewer.database.model.toDbEntity
 import com.example.kittyviewer.network.NetworkDataSource
@@ -17,11 +20,30 @@ import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val kittyDao: KittyDao,
+    private val bookmarkDao: BookmarkDao,
     private val dataSource: NetworkDataSource,
 ) : Repository {
     override fun getKittiesList(): Flow<List<Kitty>> {
         return kittyDao.getKittiesList().map {
             it.map(KittyEntity::asExternalModel)
+        }
+    }
+
+    override fun addToBookmarks(kitty: Kitty) {
+        bookmarkDao.addToBookmarks(kitty.asBookmarkEntity())
+    }
+
+    override fun removeFromBookmarks(kitty: Kitty) {
+        bookmarkDao.deleteFromBookmarks(kitty.asBookmarkEntity())
+    }
+
+    override suspend fun isBookmarked(id: String): Flow<Boolean> {
+        return bookmarkDao.isBookmarked(id)
+    }
+
+    override suspend fun getBookmarks(): Flow<List<Kitty>> {
+        return bookmarkDao.getBookmarksList().map {
+            it.map(BookmarkEntity::asExternalModel)
         }
     }
 
