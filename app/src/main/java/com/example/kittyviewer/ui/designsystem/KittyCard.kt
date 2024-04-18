@@ -1,6 +1,5 @@
 package com.example.kittyviewer.ui.designsystem
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -29,18 +28,14 @@ import com.example.kittyviewer.R
 import com.example.kittyviewer.data.model.Kitty
 
 @Composable
-fun KittyCard(kitty: Kitty) {
+fun KittyCard(kitty: Kitty, onClick: () -> Unit) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth(.3f)
             .fillMaxHeight()
             .padding(horizontal = 8.dp, vertical = 20.dp)
-            .clickable {
-                Toast
-                    .makeText(context, "${kitty.width}x${kitty.height}", Toast.LENGTH_LONG)
-                    .show()
-            },
+            .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
@@ -79,5 +74,5 @@ fun KittyCardPreview() {
             width = 90,
             height = 160
         )
-    )
+    ) {}
 }
