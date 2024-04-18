@@ -12,7 +12,7 @@ interface KittyDao {
     @Query(
         value = "SELECT * FROM kitties ORDER BY createdAt Asc"
     )
-    fun getMovieEntities(): Flow<List<KittyEntity>>
+    fun getKittiesList(): Flow<List<KittyEntity>>
 
     @Upsert
     fun upsertKitties(entities: List<KittyEntity>)

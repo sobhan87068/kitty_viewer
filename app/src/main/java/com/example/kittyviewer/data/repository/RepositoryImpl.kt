@@ -20,7 +20,7 @@ class RepositoryImpl @Inject constructor(
     private val dataSource: NetworkDataSource,
 ) : Repository {
     override fun getKittiesList(): Flow<List<Kitty>> {
-        return kittyDao.getMovieEntities().map {
+        return kittyDao.getKittiesList().map {
             it.map(KittyEntity::asExternalModel)
         }
     }
