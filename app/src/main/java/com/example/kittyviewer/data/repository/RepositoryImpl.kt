@@ -29,19 +29,23 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override fun addToBookmarks(kitty: Kitty) {
-        bookmarkDao.addToBookmarks(kitty.asBookmarkEntity())
+    override suspend fun addToBookmarks(kitty: Kitty) {
+        withContext(Dispatchers.IO) {
+            bookmarkDao.addToBookmarks(kitty.asBookmarkEntity())
+        }
     }
 
-    override fun removeFromBookmarks(kitty: Kitty) {
-        bookmarkDao.deleteFromBookmarks(kitty.asBookmarkEntity())
+    override suspend fun removeFromBookmarks(kitty: Kitty) {
+        withContext(Dispatchers.IO) {
+            bookmarkDao.deleteFromBookmarks(kitty.asBookmarkEntity())
+        }
     }
 
-    override suspend fun isBookmarked(id: String): Flow<Boolean> {
+    override fun isBookmarked(id: String): Flow<Boolean> {
         return bookmarkDao.isBookmarked(id)
     }
 
-    override suspend fun getBookmarks(): Flow<List<Kitty>> {
+    override fun getBookmarks(): Flow<List<Kitty>> {
         return bookmarkDao.getBookmarksList().map {
             it.map(BookmarkEntity::asExternalModel)
         }

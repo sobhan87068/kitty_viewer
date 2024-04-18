@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddBookmarkUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    operator fun invoke(kitty: Kitty) {
+    operator suspend fun invoke(kitty: Kitty) {
         repository.addToBookmarks(kitty)
     }
 }

@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     fun getKittiesList(): Flow<List<Kitty>>
 
-    fun addToBookmarks(kitty: Kitty)
+    suspend fun addToBookmarks(kitty: Kitty)
 
-    suspend fun getBookmarks(): Flow<List<Kitty>>
+    fun getBookmarks(): Flow<List<Kitty>>
 
-    suspend fun isBookmarked(id: String): Flow<Boolean>
+    fun isBookmarked(id: String): Flow<Boolean>
 
-    fun removeFromBookmarks(kitty: Kitty)
+    suspend fun removeFromBookmarks(kitty: Kitty)
 
     suspend fun syncKitties(page: Int): Flow<ApiResult>
 }

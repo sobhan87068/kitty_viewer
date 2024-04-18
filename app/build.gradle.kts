@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kittyviewer.android.hilt)
     alias(libs.plugins.kittyviewer.android.room)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

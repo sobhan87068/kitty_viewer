@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetIsBookmarkedUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(kitty: Kitty): Flow<Boolean> {
+    operator fun invoke(kitty: Kitty): Flow<Boolean> {
         return repository.isBookmarked(kitty.id)
     }
 }

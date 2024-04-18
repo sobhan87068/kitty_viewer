@@ -1,6 +1,7 @@
 package com.example.kittyviewer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -20,14 +21,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import com.example.kittyviewer.data.model.Kitty
 import com.example.kittyviewer.ui.bookmark.BookmarkViewModel
 import com.example.kittyviewer.ui.bookmark.Bookmarks
 import com.example.kittyviewer.ui.designsystem.LoadMoreError
+import com.example.kittyviewer.ui.details.DetailsPage
+import com.example.kittyviewer.ui.details.DetailsViewModel
 import com.example.kittyviewer.ui.home.ApiState
 import com.example.kittyviewer.ui.home.Home
 import com.example.kittyviewer.ui.home.HomeAction
@@ -40,6 +46,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val bookmarkViewModel: BookmarkViewModel by viewModels()
+    private val detailsViewModel: DetailsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,15 +60,30 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        NavHost(navController = navController, startDestination = "/home") {
-                            composable("/home") {
+                        NavHost(navController = navController, startDestination = "home") {
+                            composable("home") {
                                 MainPage(homeViewModel) {
                                     homeViewModel.submitAction(HomeAction.LoadMore)
                                 }
                             }
 
-                            composable("/bookmarks") {
+                            composable("bookmarks") {
                                 Bookmarks(bookmarkViewModel)
+                            }
+
+                            dialog(
+                                "details",
+                                dialogProperties = DialogProperties(
+                                    decorFitsSystemWindows = false,
+                                    usePlatformDefaultWidth = false
+                                )
+                            ) { navBackStackEntry ->
+                                val kitty =
+                                    navController.previousBackStackEntry?.savedStateHandle?.get<Kitty>(
+                                        "kitty"
+                                    )
+                                Log.i("KittyList", "kitty:$kitty")
+                                kitty?.let { DetailsPage(kitty = it, detailsViewModel) }
                             }
                         }
                     }
