@@ -76,8 +76,8 @@ fun KittyCardPreview() {
         kitty = Kitty(
             id = "test",
             url = "https://cdn2.thecatapi.com/images/a49.jpg",
-            width = -1,
-            height = -1
+            width = 90,
+            height = 160
         )
     )
 }

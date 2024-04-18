@@ -42,11 +42,11 @@ private const val CELL_COUNT_LANDSCAPE = 6
 fun HomePreview() {
     Home(
         kitties = listOf(
-            Kitty("1", "title", 0, 0),
-            Kitty("2", "title", 0, 0),
-            Kitty("3", "title", 0, 0),
-            Kitty("4", "title", 0, 0),
-            Kitty("5", "title", 0, 0),
+            Kitty("1", "https://cdn2.thecatapi.com/images/a49.jpg", 90, 160),
+            Kitty("2", "https://cdn2.thecatapi.com/images/a49.jpg", 90, 160),
+            Kitty("3", "https://cdn2.thecatapi.com/images/a49.jpg", 90, 160),
+            Kitty("4", "https://cdn2.thecatapi.com/images/a49.jpg", 90, 160),
+            Kitty("5", "https://cdn2.thecatapi.com/images/a49.jpg", 90, 160),
         ), scrollState = rememberLazyGridState()
     )
 }
